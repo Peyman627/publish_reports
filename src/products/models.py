@@ -10,4 +10,4 @@ class Product(models.Model):
 
     def __str__(self):
         created_date = self.created.strftime('%d/%m/%Y')
-        return f'{self.name}---{created_date}'
+        return f'{self.name} --- {created_date}'
