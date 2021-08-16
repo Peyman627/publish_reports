@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.views import generic
 
 from .models import Sale
+from .forms import SalesSearchForm
 
 
 def home_view(request):
-    hello = 'hello world from the view'
-    return render(request, 'sales/home.html', {'hello': hello})
+    form = SalesSearchForm(request.POST or None)
+    context = {'form': form}
+    return render(request, 'sales/home.html', context)
 
 
 class SaleListView(generic.ListView):
