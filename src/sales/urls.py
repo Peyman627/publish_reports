@@ -6,4 +6,5 @@ app_name = 'sales'
 
 urlpatterns = [
     path('', views.home_view, name='home'),
+    path('list/', views.SalesListView.as_view(), name='list'),
 ]

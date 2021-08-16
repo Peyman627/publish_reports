@@ -31,7 +31,7 @@ class Sale(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Sales for the amount of ${self.total_price}'
+        return f'Sale for the amount of ${self.total_price}'
 
     def save(self, *args, **kwargs):
         if self.transaction_id == "":

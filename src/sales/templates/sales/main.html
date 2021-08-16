@@ -2,10 +2,15 @@
 
 
 {% block title %}
-home
+sales list
 {% endblock title %}
 
-
 {% block content %}
-{{ hello }}
+sales list:
+<br>
+
+{% for sale in sales %}
+{{ sale.transaction_id }}
+{% endfor %}
+
 {% endblock content %}
