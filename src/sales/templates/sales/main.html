@@ -10,7 +10,7 @@ sales list:
 <br>
 
 {% for sale in sales %}
-{{ sale.transaction_id }}
+<a href="{{ sale.get_absolute_url }}">{{ sale.transaction_id }}</a>
 {% endfor %}
 
 {% endblock content %}

@@ -9,7 +9,13 @@ def home_view(request):
     return render(request, 'sales/home.html', {'hello': hello})
 
 
-class SalesListView(generic.ListView):
+class SaleListView(generic.ListView):
     model = Sale
     template_name = 'sales/main.html'
     context_object_name = 'sales'
+
+
+class SaleDetailView(generic.DetailView):
+    model = Sale
+    template_name = 'sales/detail.html'
+    context_object_name = 'sale'
