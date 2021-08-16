@@ -20,6 +20,10 @@ class Position(models.Model):
         self.price = self.product.price * self.quantity
         return super().save(*args, **kwargs)
 
+    def get_sale_id(self):
+        sale = self.sale_set.first()
+        return sale.id
+
     def __str__(self):
         return f'id: {self.id}, product: {self.product.name}, quantity: {self.quantity}'
 
@@ -33,9 +37,6 @@ class Sale(models.Model):
     created = models.DateTimeField(blank=True)
     updated = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return f'Sale for the amount of ${self.total_price}'
-
     def get_absolute_url(self):
         return reverse('sales:detail', kwargs={'pk': self.pk})
 
@@ -48,6 +49,9 @@ class Sale(models.Model):
 
     def get_positions(self):
         return self.positions.all()
+
+    def __str__(self):
+        return f'Sale for the amount of ${self.total_price}'
 
 
 class CSV(models.Model):

@@ -16,7 +16,14 @@ home
 
 
 {% if sales_df %}
+sales df:
 {{ sales_df | safe }}
+<br>
+positions df:
+{{ positions_df | safe }}
+<br>
+merged df:
+{{ merged_df | safe }}
 {% else %}
 <h3>no data</h3>
 {% endif %}
