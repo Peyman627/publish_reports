@@ -1,9 +1,11 @@
 import uuid, base64
-from django.db.models import base
+
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 from io import BytesIO
 
+from django.db.models import base
 from pandas.io.formats.format import buffer_put_lines
 from customers.models import Customer
 from profiles.models import Profile
@@ -39,8 +41,8 @@ def get_chart(chart_type, data, **kwargs):
     plt.switch_backend('AGG')
     fig = plt.figure(figsize=(10, 4))
     if chart_type == '#1':
-        print('Bar chart')
         plt.bar(data['transaction_id'], data['price'])
+        sns.barplot(x='transaction_id', y='price', data=data)
     elif chart_type == '#2':
         labels = kwargs['labels']
         plt.pie(data=data, x='price', labels=labels)

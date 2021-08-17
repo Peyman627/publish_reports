@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
+
 
 {% block title %}
 home
@@ -27,9 +29,9 @@ merged df:
 grouped by df:
 {{ df | safe }}
 <br>
-<img src="data:image/png;base64, {{ chart| safe }}" alt="">
+<img id="img" src="data:image/png;base64, {{ chart| safe }}" alt="">
 {% else %}
-<h3>no data</h3>
+<h3>No Data</h3>
 {% endif %}
 
 {% endblock content %}
