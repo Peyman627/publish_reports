@@ -5,7 +5,7 @@ from django.views import generic
 
 from .models import Sale
 from .forms import SalesSearchForm
-from .utils import get_customer_form_id, get_salesman_from_id
+from .utils import get_customer_form_id, get_salesman_from_id, get_chart
 
 
 def home_view(request):
@@ -13,6 +13,8 @@ def home_view(request):
     sales_df = None
     positions_df = None
     merged_df = None
+    df = None
+    chart = None
 
     if request.method == 'POST':
         date_from = request.POST['date_from']
@@ -37,7 +39,6 @@ def home_view(request):
                 },
                 axis=1,
                 inplace=True)
-            sales_df_html = sales_df.to_html()
 
             positions_data = [{
                 'position_id': position.id,
@@ -48,18 +49,31 @@ def home_view(request):
             } for sale in sales_qs for position in sale.get_positions()]
 
             positions_df = pd.DataFrame(positions_data)
-            positions_df_html = positions_df.to_html()
 
             merged_df = pd.merge(sales_df, positions_df, on='sale_id')
-            merged_df_html = merged_df.to_html()
+
+            df = merged_df.groupby('transaction_id',
+                                   as_index=False)['price'].agg('sum')
+
+            chart = get_chart(chart_type,
+                              df,
+                              labels=df['transaction_id'].values)
+
+            sales_df = sales_df.to_html()
+            positions_df = positions_df.to_html()
+            merged_df = merged_df.to_html()
+            df = df.to_html()
 
         else:
             pass
+
     context = {
         'form': form,
-        'sales_df': sales_df_html,
-        'positions_df': positions_df_html,
-        'merged_df': merged_df_html
+        'sales_df': sales_df,
+        'positions_df': positions_df,
+        'merged_df': merged_df,
+        'df': df,
+        'chart': chart
     }
     return render(request, 'sales/home.html', context)
 

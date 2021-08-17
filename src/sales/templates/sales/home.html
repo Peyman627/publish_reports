@@ -24,6 +24,10 @@ positions df:
 <br>
 merged df:
 {{ merged_df | safe }}
+grouped by df:
+{{ df | safe }}
+<br>
+<img src="data:image/png;base64, {{ chart| safe }}" alt="">
 {% else %}
 <h3>no data</h3>
 {% endif %}
